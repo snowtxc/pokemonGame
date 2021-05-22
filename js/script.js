@@ -1,32 +1,86 @@
-
 window.addEventListener('load',function(){
-   var pokemons = [];
+ var pokemonsArr = new Array();
 
 
-   function loadPokemons(){
-    fetch('https://pokeapi.co/api/v2/pokedex/kanto/')
-        .then(response => response.json())
-        .then(data => {
-            data.pokemon_entries.forEach(element => {
-                let entry_number = element.entry_number;
-                let name = element.pokemon_species.name;
+async function loadPokemons(){
+    response = await fetch("https://pokeapi.co/api/v2/pokedex/kanto/");
 
-                this.fetch("https://pokeapi.co/api/v2/pokemon/"+name).then(response => response.json()).then((data) =>{
-                   let urlImage = data.sprites.front_default;     
-                   pokemons.push({id: entry_number ,name: name,urlImage: urlImage});
-                })
-        });
-    }).finally(() =>{
-        console.log(pokemons);
-    })
+    const kanto = await response.json();
+    const pokemons = kanto.pokemon_entries;
 
-   }
+    for(let i=0;i< pokemons.length; i++){
+      let name = pokemons[i].pokemon_species.name;
+      let id = pokemons[i].entry_number;
+
+      res = await fetch("https://pokeapi.co/api/v2/pokemon/"+name);
+      res = await res.json();
+      
+      let imageUrl = res.sprites.front_default;
+
+      let pokemon_item = {
+        name: name,
+        id: id,
+        imageUrl: imageUrl
+      }
+
+      pokemonsArr.push(pokemon_item);
+
+    }
+
+    loadGame(); 
+ }
 
 
-   loadPokemons();
-   
-   
+
+function loadGame(){
+   var pokemonsGenerados = generateAnswerPokemons();
+   correctPokemon = pokemonsGenerados[Math.floor(Math.random()*4)];
+
+   render(pokemonsGenerados,correctPokemon);
+
+
+}
+
+
+
+
+
+
+function render(pokemonsArr,correctPokemon){
+   let imagenPokemon = document.getElementById('imagenPokemon');
+   let contenedorRespuestas = document.getElementById('respuestas');
+
+   imagenPokemon.src = correctPokemon.imageUrl;
+
+
+   pokemonsArr.forEach((item) =>{
+    var newDiv = document.createElement("div");
+    newDiv.innerHTML = item.name;
+    contenedorRespuestas.appendChild(newDiv);
     
-   
 
-})
+     })
+
+
+
+}
+
+
+
+
+
+
+function generateAnswerPokemons(){
+  let pokemons = [];
+  for(i=0;i<=4;i++){
+      pokemons.push(pokemonsArr[Math.floor(Math.random()*150)]);
+  }
+  return pokemons;
+
+}
+
+
+
+loadPokemons();
+
+});
