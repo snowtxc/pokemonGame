@@ -39,6 +39,11 @@ async function loadPokemons(){
 }
 
 
+
+
+
+
+
 function render(pokemonsArr,correctPokemon){
    imagenPokemonDOM.src = correctPokemon.imageUrl;
    for(let i=0; i< opcionesElementsDOM.length;i++){
@@ -103,13 +108,16 @@ document.querySelectorAll('.opciones').forEach(item => {
   })
 })
 
-
-
+function loadGame(){
+   generateAnswerPokemons();
+   correctPokemon$ = randomPokemonArr$[Math.floor(Math.random(0,3))];
+   render(randomPokemonArr$,correctPokemon$);
+   
+}
 
 
 
 
 loadPokemons();
-
 
 });
