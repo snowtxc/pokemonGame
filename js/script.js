@@ -1,6 +1,14 @@
 window.addEventListener('load',function(){
- var pokemonsArr = new Array();
+ var pokemonsArr$ = new Array();
+ var correctPokemon$ = [];
+ var randomPokemonsArr$ = [];
+ var points = 0;
 
+ //DOMS Components.
+ var imagenPokemonDOM = document.getElementById('imagenPokemon');
+ var contenedorRespuestasDOM = document.getElementById('respuestas');
+ var  opcionesElementsDOM  = document.getElementsByClassName('opciones');
+ var pointsElementDOM = document.getElementById('points');
 
 async function loadPokemons(){
     response = await fetch("https://pokeapi.co/api/v2/pokedex/kanto/");
@@ -23,64 +31,91 @@ async function loadPokemons(){
         imageUrl: imageUrl
       }
 
-      pokemonsArr.push(pokemon_item);
+      pokemonsArr$.push(pokemon_item);
 
     }
 
     loadGame(); 
+}
+
+
+function render(pokemonsArr,correctPokemon){
+   imagenPokemonDOM.src = correctPokemon.imageUrl;
+   for(let i=0; i< opcionesElementsDOM.length;i++){
+        opcionesElementsDOM[i].innerHTML = randomPokemonArr$[i].name; 
+        opcionesElementsDOM[i].setAttribute('data-id',randomPokemonArr$[i].id);
+   }
+
  }
+
+
+function checkIfRepeat(pokemonItem){ 
+  let repetido = false;
+  for(i = 0;i < randomPokemonArr$.length; i++){
+    if(pokemonItem.id ==  randomPokemonArr$[i].id){
+      repetido = true;
+      break;;
+    }
+  }
+  return repetido;
+}
+
+
+function generateAnswerPokemons(){
+  randomPokemonArr$ = [];
+  let contador = 0;
+  while(contador <= 3){
+      let randomPokemon = pokemonsArr$[Math.floor(Math.random()*150)];
+      console.log(randomPokemon);
+      if(checkIfRepeat(randomPokemon) == false){
+        randomPokemonArr$.push(randomPokemon);
+        contador ++;
+     }
+   }
+  
+}
+
+
+function sumPoint(){
+  points++;
+  pointsElementDOM.innerHTML = "Points: " + points;
+
+}
+
+
+function resetPoints(){
+  points = 0;
+  pointsElementDOM.innerHTML = "Points" + points;
+}
+
+
+document.querySelectorAll('.opciones').forEach(item => {
+  item.addEventListener('click', event => {
+    opcion = item.getAttribute('data-id');
+    if(opcion == correctPokemon$.id){
+      sumPoint();
+    }else{
+      resetPoints();
+    }
+
+    loadGame();
+
+  })
+})
 
 
 
 function loadGame(){
-   var pokemonsGenerados = generateAnswerPokemons();
-   correctPokemon = pokemonsGenerados[Math.floor(Math.random()*4)];
-
-   render(pokemonsGenerados,correctPokemon);
-
-
+   generateAnswerPokemons();
+   correctPokemon$ = randomPokemonArr$[Math.floor(Math.random(0,3))];
+   render(randomPokemonArr$,correctPokemon$);
+   
 }
 
-
-
-
-
-
-function render(pokemonsArr,correctPokemon){
-   let imagenPokemon = document.getElementById('imagenPokemon');
-   let contenedorRespuestas = document.getElementById('respuestas');
-
-   imagenPokemon.src = correctPokemon.imageUrl;
-
-
-   pokemonsArr.forEach((item) =>{
-    var newDiv = document.createElement("div");
-    newDiv.innerHTML = item.name;
-    contenedorRespuestas.appendChild(newDiv);
-    
-
-     })
-
-
-
-}
-
-
-
-
-
-
-function generateAnswerPokemons(){
-  let pokemons = [];
-  for(i=0;i<=4;i++){
-      pokemons.push(pokemonsArr[Math.floor(Math.random()*150)]);
-  }
-  return pokemons;
-
-}
 
 
 
 loadPokemons();
+
 
 });
