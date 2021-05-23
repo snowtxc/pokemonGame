@@ -71,7 +71,6 @@ function generateAnswerPokemons(){
   let contador = 0;
   while(contador <= 3){
       let randomPokemon = pokemonsArr$[Math.floor(Math.random()*150)];
-      console.log(randomPokemon);
       if(checkIfRepeat(randomPokemon) == false){
         randomPokemonArr$.push(randomPokemon);
         contador ++;
@@ -110,7 +109,7 @@ document.querySelectorAll('.opciones').forEach(item => {
 
 function loadGame(){
    generateAnswerPokemons();
-   correctPokemon$ = randomPokemonArr$[Math.floor(Math.random(0,3))];
+   correctPokemon$ = randomPokemonArr$[Math.floor(Math.random()*3)]; 
    render(randomPokemonArr$,correctPokemon$);
    
 }
