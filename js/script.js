@@ -105,12 +105,6 @@ document.querySelectorAll('.opciones').forEach(item => {
 
 
 
-function loadGame(){
-   generateAnswerPokemons();
-   correctPokemon$ = randomPokemonArr$[Math.floor(Math.random(0,3))];
-   render(randomPokemonArr$,correctPokemon$);
-   
-}
 
 
 
