@@ -35,6 +35,8 @@ async function loadPokemons(){
 
     }
 
+
+    
     loadGame(); 
 }
 
@@ -109,11 +111,26 @@ document.querySelectorAll('.opciones').forEach(item => {
 
 function loadGame(){
    generateAnswerPokemons();
+   ocultarPreloader();
+   showGame();
    correctPokemon$ = randomPokemonArr$[Math.floor(Math.random()*3)]; 
    render(randomPokemonArr$,correctPokemon$);
    
 }
 
+function ocultarPreloader(){
+  const preloaderDOM = document.getElementById('preloader');
+  console.log(preloaderDOM);
+  preloaderDOM.style.display = "none";
+}
+
+
+function showGame(){
+   const container_gameDOM = document.getElementById('container_game');
+   console.log(container_gameDOM);
+   container_gameDOM.style.display = "block";
+
+}
 
 
 

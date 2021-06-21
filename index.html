@@ -7,6 +7,11 @@
         <link rel="stylesheet" type="text/css" href="css/responsive.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <!--  Materialize  framework --->
+
+        <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="assets/materialize/css/materialize.min.css">
+
  
 
 
@@ -23,7 +28,23 @@
 
         <div class="global">
             <div id="title">Desarrollado por Rodrigo Castro</div>
-            <div class="container_game">
+
+             <div class="preloader" id="preloader">
+                    <div class="preloader-wrapper big active">
+                        <div class="spinner-layer spinner-red-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                             <div class="circle"></div>
+                         </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container_game" id="container_game">
                 <div class="image">
                     <img  id="imagenPokemon">
                 </div>
@@ -38,7 +59,13 @@
 
                 <div class="points" id="points">Points: 0</div>
             </div>
-        </div
+        </div>
+
+
+
+
+
+
 
     </body>
 </html>

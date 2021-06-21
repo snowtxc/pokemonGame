@@ -25,6 +25,16 @@
 
 }
 
+
+.global .preloader{
+	width: 100px;
+	height: 100px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 100px;
+
+}
+
 .global .container_game{
 
 	width: 30%;
@@ -33,6 +43,8 @@
 	margin-top: 50px;
 	padding: 10px;
 	background: transparent;
+	display: none;
+
 }
 
 .global .container_game .image{
@@ -82,4 +94,5 @@
 	background: rgba(255,255,255,0.2);
 	margin-top: 20px;
 }
+
 
